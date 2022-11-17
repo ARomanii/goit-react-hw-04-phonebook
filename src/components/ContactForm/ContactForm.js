@@ -1,72 +1,62 @@
-import React, { Component } from "react";
-import styles from "./contactform.module.css";
+import React from 'react';
+import { useState } from 'react';
+import css from './contactform.module.css';
 
-const shortId = require("shortid");
+export const ContactForm = ({ handleSubmit }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-export default class ContactForm extends Component {
-  state = {
-    name: "",
-    number: "",
+  const handleChangeName = e => {
+    const { value } = e.target;
+    setName(value);
   };
 
-  handleChangeName = (event) => {
-    this.setState({
-      name: event.target.value,
-    });
+  const handleChangeNumber = e => {
+    const { value } = e.target;
+    setNumber(value);
   };
 
-  handleChangeNumber = (event) => {
-    this.setState({
-      number: event.target.value,
-    });
+  const handleFormSubmit = e => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    handleSubmit({ name: name, number: number });
+    form.reset();
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.props.onSubmit({
-      id: shortId.generate(),
-      name: this.state.name,
-      number: this.state.number,
-    });
-    this.setState({
-      name: "",
-      number: "",
-    });
-  };
+  return (
+    <div>
+      <h1>Phonebook</h1>
 
-  render() {
-    return (
-      <div>
-        <h1>Phonebook</h1>
-
-        <form className={styles.border} onSubmit={this.handleSubmit}>
-          <h3>Name</h3>
-          <input
-            type="text"
-            onChange={this.handleChangeName}
-            value={this.state.name}
-          ></input>
-          <h3>Number</h3>
-          <input
-            pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
-            placeholder="000-00-00"
-            type="tel"
-            onChange={this.handleChangeNumber}
-            value={this.state.number}
-          ></input>
-          <br />
-          <button
-            className={styles.button}
-            type="submit"
-            disabled={
-              this.state.name === "" || this.state.number === "" ? true : false
-            }
-          >
-            {" "}
-            Add contact
-          </button>
-        </form>
-      </div>
-    );
-  }
+      <form className={css.border} onSubmit={handleFormSubmit}>
+        <h3>Name</h3>
+        <input
+          type="text"
+          onChange={handleChangeName}
+          value={name}
+        ></input>
+        <h3>Number</h3>
+        <input
+          pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
+          placeholder="000-00-00"
+          type="tel"
+          onChange={handleChangeNumber}
+          value={number}
+        ></input>
+        <br />
+        <button
+          className={css.button}
+          type="submit"
+          disabled={
+            {name} === "" || {number} === "" ? true : false
+          }
+        >
+          {" "}
+          Add contact
+        </button>
+      </form>
+    </div>
+  );
 }
+
+
+  
