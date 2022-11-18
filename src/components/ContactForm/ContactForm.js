@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import css from './contactform.module.css';
 
-export const ContactForm = ({ handleSubmit }) => {
+export const ContactForm = ({ onSubmitForm  }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -19,7 +19,7 @@ export const ContactForm = ({ handleSubmit }) => {
   const handleFormSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
-    handleSubmit({ name: name, number: number });
+    onSubmitForm({ name: name, number: number });
     form.reset();
   };
 
